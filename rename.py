@@ -25,13 +25,19 @@ def main():
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
 
+    if not args.folder.is_dir():
+        print("folder not found")
+        return 1
     files = collect(args.folder)
     if not files:
         print("no images found")
-        return
+        return 0
 
     for index, path in enumerate(files, 1):
         target = args.folder / f"{args.prefix}-{index:03d}{path.suffix.lower()}"
+        if target.exists() and target != path:
+            print(f"skipped {path.name}: {target.name} already exists")
+            continue
         if args.dry_run:
             print(f"{path.name} -> {target.name}")
         else:
@@ -40,4 +46,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
