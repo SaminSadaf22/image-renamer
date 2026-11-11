@@ -2,7 +2,7 @@
 """Batch-rename image files in a folder.
 
 Example:
-    python rename.py ./photos trip --prefix trip --dry-run
+    python rename.py ./photos trip --dry-run
 """
 
 import argparse
